@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>ADIBO Cart</title>
+    <style>
+    .home {
+            color: white;
+            width: 50px;
+    }
+       .cart{
+        /* background-color: yellow; */
+        color:black;
+        width: 200px;
+        padding-left: 10px;
+        /* border-radius: 30%; */
+    }
+    .empty{
+        margin-left: 10px;
+        color:black;
+    }
+    .home, .cartitem, .empty{
+            text-decoration: none;
+            height:30px;
+             line-height: 30px;
+            font-size: 20px;
+    }
+    .remove, .remove a{
+            color:red;
+            padding-left: 20px;
+            text-decoration: none;
+    }
+    #cart_number {
+        color:yellow;
+        font-size: larger;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="navbar bg-secondary d-flex justify-content-around">
+    
+        <a class="home" href='index.html'>Home</a>
+        <div class=" cart d-flex flex-row">
+            <a class="cartitem" href="adibocart.html">
+                <div id="cart_number">0</div>
+            </a>
+            <div id="empty">
+                <a class='empty'  onclick='handleEmptyCart()' href="#">empty cart</a>
+            </div>
+        </div>
+    
+        </div>
+    <div class="container" >
+        <table class="table">
+            <thead class="table-body">
+                <tr>
+                    <th>ID</th>
+                    <th>IMAGE</th>
+                    <th>NAME</th>
+                    <th>PRICE</th>
+                    <th>QTY</th>
+                    <th class="remove">X</th>
+                </tr>
+            </thead>
+            <tbody id="datacart">
+                
+            </tbody>
+            <tfoot class="border border-2">
+                <tr>
+                <td class="colspan-3"></td>
+                <td></td>
+                <td></td>
+                <td id="total"></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+        </table>
+
+    </div>
+
+    <script>
+        let  handleEmptyCart=()=>{
+            basket=[];
+            localStorage.setItem('data',JSON.stringify(basket));
+            calculate();
+            total.innerHTML=totalamount();
+            shoping_cart();
+
+        }
+
+        let basket=JSON.parse(localStorage.getItem('data'))||[]
+        let datacart = document.getElementById('datacart');
+        let calculate=()=>document.getElementById('cart_number').innerHTML=basket.length;
+        calculate();
+        let total=document.getElementById('total');
+       
+        let totalamount=()=>{
+            let pricetotal=0;
+            basket.map(x=>{
+                pricetotal+=x.item*x.price;
+        })
+            return pricetotal;
+        }
+     
+        total.innerHTML=totalamount();
+        
+        let shoping_cart = () => {
+                if (basket.length !== -1) {
+                    return (
+                        datacart.innerHTML = basket.map((item) => {
+                    return (
+                        `<tr>
+                            <td>${item.id}</td>
+                            <td><img src="${item.img}" height='50' width='50' alt="${item.id}"></td>
+                            <td>${item.name}</td>
+                            <td>${item.price}</td>
+                            <td>${item.item}</td>
+                            <td class='remove' onclick="remove(${item.id})"><a href='#' >REMOVE</a></td>
+                        </tr>`)
+                        }
+                        )
+                    )
+                }
+             }
+
+    shoping_cart();
+
+        let remove =(id)=>{
+            basket = basket.filter(x=>x.id != id)
+            localStorage.setItem('data',JSON.stringify(basket));
+            calculate();
+            total.innerHTML=totalamount();
+            shoping_cart();
+        }
+     </script>
+
+</body>
+
+</html>
