@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="checkout margin-auto">
+        <form onsubmit="" class="d-flex flex-column margin-auto">   
+        <div><h2>Please fill form for Home Delivery</h2></div>
+        <div> Name: <input type="text" name="name" id=""></div>
+        <div>Address: <input type="text" name="address" id=""></div>
+        <div>Phone: <input type="number" name="phone" id=""></div>
+        <button onclick="handleEmptyCart()" id="checkoutsubmit"><a href="index.html">Confirm BUY</a> </button>
+    </form>
+<SCript>
+    let  handleEmptyCart=()=>{
+            basket=[];
+            localStorage.setItem('data',JSON.stringify(basket));
+            alert('Thanking you for buying , your COD order will be Delivered soon')
+
+        }
+</SCript>
+
+    </div>
+    
+</body>
+</html>
